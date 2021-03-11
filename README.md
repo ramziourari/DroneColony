@@ -3,7 +3,7 @@ This repository contains code for the [Multi-Agent Collision Avoidance via Deep 
 
 ![alt text](8D.gif "Title Text")
 #### Clone:
-`git clone git@gitlab.com:ramzi_ourari/dronecolony.git`
+`git clone git@github.com:ramziourari/droneColony.git`
 
 #### Install dependencies:
 `conda env create -f swarm.yml`
