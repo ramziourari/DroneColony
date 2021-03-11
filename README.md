@@ -58,7 +58,6 @@ Environments are created with unity see [unity-project](https://gitlab.com/ramzi
 #### useful links
 * [unity ml agents examples](https://github.com/Unity-Technologies/ml-agents)
 * [sim to real](https://github.com/TaoChenOSU/quad_nn)
-* [crazyflie simple demo](https://git.rwth-aachen.de/bcs/projects/dronelab/simple-fly-demo)
 * [ray community examples](https://docs.ray.io/en/latest/rllib-examples.html#community-examples)
 * [unity3d with ray](https://github.com/ray-project/ray/blob/master/rllib/examples/unity3d_env_local.py)
 * [unity3d server-client](https://github.com/ray-project/ray/tree/master/rllib/examples/serving)
