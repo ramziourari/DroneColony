@@ -1,0 +1,1 @@
+This [repo](https://git.rwth-aachen.de/bcs/projects/dronelab/thesis/masterthesis-swienty-code/-/tree/cleanup) is useful for the hardware implementation. Replace the files in [src](https://git.rwth-aachen.de/bcs/projects/dronelab/thesis/masterthesis-swienty-code/-/tree/cleanup/src) with the files here in order to use the trained policies for the collision avoidance task.

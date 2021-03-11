@@ -1,0 +1,105 @@
+PPO_AtoB:
+
+    env: "Game_MultiDroneDenseContinuous_neu"  # name of your unity environment (see obs and action space in unity_env.py)
+    port: 9900  # port of parameters server (clients will connect to this address)
+    server-adress: "130.83.247.113"  # ip address of parameters server
+    checkpoint-freq: 10
+    num_cpus: 1  # for the stochastic gradient descent computation
+
+    config:
+
+        num_workers: 0  # this must be 0 when working in a server-client fashion
+        # Disable OPE, since the rollouts are coming from online clients
+        input_evaluation: []
+        # Other settings.
+        train_batch_size: 50000
+        sgd_minibatch_size: 2500
+        shuffle_sequences: True
+        rollout_fragment_length: 5000
+        "lr_schedule": [
+                   [0, 0.0005],
+                   [150000000, 0.000001]
+        ]
+        # if not torch then tensorflow will be used
+        framework: tf
+
+        model:
+            fcnet_hiddens: [64, 64]
+            no_final_linear: False
+
+    client-config:
+
+        game: "envs/Game_AtoB.x86_64"  # Put the path to your compiled game executable here (file should have DronesSwarm as root dir)
+        episode-horizon: 500  # The max. number of `step()`s for any episode (per agent) before it'll be reset again automatically
+        # --- game speed and graphics ---
+        no-graphic: false  # false: show game
+        time-scale: 1  # simulation speed (max. 90)
+
+    # --- task dependent parameters ---
+    env_params:
+
+        # --- task specs ---
+        num_drones: 2.0  # initial swarm size, this can be increased after x steps
+        episodeLength: 500  # The max. number of `step()`s for any episode (per agent) before it'll be reset again automatically
+        nearestNeighbors: 2  # how many neighbors to consider (this is inclusive own drone!: (3 --> 2 neighbors)
+        observationSize: 10  # 7 + 4 (nearestNeighbors - 1) change this in unity_env.py too (L.203)
+        minRespawnRadius: 15  # :)
+        maxRespawnRadius: 25  # :)
+
+        # --- agent specs ---
+        max_lv: 35.0  # linear velocity
+        max_av: 15.0  # angular velocity
+        perceptionRadius: 25  # agent detection radius (agents only not target)
+
+        # --- reward specs ---
+        agentPenaltyConst: -1
+        targetPenaltyConst: 1.0
+        minDistanceToAgent: 7  # below this distance.. collision
+        minDistanceToTarget: 3.5  # below this distance, agent is on target
+
+    ppo-config:
+    # Should use a critic as a baseline (otherwise don't use value baseline;
+    # required for using GAE).
+    "use_critic": True
+    # If true, use the Generalized Advantage Estimator (GAE)
+    # with a value function, see https://arxiv.org/pdf/1506.02438.pdf.
+    "use_gae": True
+    # The GAE(lambda) parameter.
+    "lambda": 1.0
+    # Initial coefficient for KL divergence.
+    "kl_coeff": 0.2
+    # Whether to shuffle sequences in the batch when training (recommended)
+    "shuffle_sequences": True
+    # Number of SGD iterations in each outer loop (i.e., number of epochs to
+    # execute per train batch).
+    "num_sgd_iter": 20
+    # Share layers for value function. If you set this to True, it's important
+    # to tune vf_loss_coeff.
+    "vf_share_layers": False
+    # Coefficient of the value function loss. IMPORTANT: you must tune this if
+    # you set vf_share_layers: True.
+    "vf_loss_coeff": 0.0
+    # Coefficient of the entropy regularizer.
+    "entropy_coeff": 0.2
+    # Decay schedule for the entropy regularizer.
+    "entropy_coeff_schedule": None
+    # PPO clip parameter.
+    "clip_param": 0.3
+    # Clip param for the value function. Note that this is sensitive to the
+    # scale of the rewards. If your expected V is large, increase this.
+    "vf_clip_param": 1.0
+    # If specified, clip the global norm of gradients by this amount.
+    "grad_clip": None
+    # Target value for KL divergence.
+    "kl_target": 0.01
+    # Whether to rollout "complete_episodes" or "truncate_episodes".
+    "batch_mode": "truncate_episodes"
+    # Which observation filter to apply to the observation.
+    "observation_filter": "NoFilter"
+    # Uses the sync samples optimizer instead of the multi-gpu one. This is
+    # usually slower, but you might want to try it if you run into issues with
+    # the default optimizer.
+    "simple_optimizer": False
+    # Whether to fake GPUs (using CPUs).
+    # Set this to True for debugging on non-GPU machines (set `num_gpus` > 0).
+    "_fake_gpus": False

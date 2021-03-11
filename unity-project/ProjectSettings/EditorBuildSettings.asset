@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Environments/Collect/Scenes/Game_CollectContinuous.unity
+    guid: ce5fc25f5e16812c8bdc9d37cccdf46d
+  - enabled: 0
+    path: Assets/Environments/AtoB/Scenes/Game_AtoBContinuous.unity
+    guid: fbd58e67fd688d78f812cd50d3fe1102
+  m_configObjects: {}
